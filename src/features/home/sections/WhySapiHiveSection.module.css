@@ -1,0 +1,41 @@
+/* 3D geometry only. Layout/typography/colours remain in Tailwind classes. */
+.stage {
+  --ring-radius: clamp(380px, 51vw, 880px);
+  perspective: 1450px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  -webkit-user-select: none;
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  pointer-events: none;
+  transform: translateZ(calc(0px - var(--ring-radius))) rotateY(0deg);
+}
+.card3d {
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+}
+/* Desktop keeps the original true CSS-3D ring unchanged. */
+.mobileStage {
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-user-select: none;
+}
+.mobileCard {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card3d, .mobileCard { transition: none !important; }
+}

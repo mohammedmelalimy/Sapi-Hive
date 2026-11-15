@@ -1,0 +1,240 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "industries": "Industries",
+    "process": "Process",
+    "join": "Join Us",
+    "contact": "Contact",
+    "menu": "Open menu",
+    "close": "Close menu",
+    "language": "EN"
+  },
+  "hero": {
+    "eyebrow": "WORKFORCE-AS-A-SERVICE",
+    "title": "Human Intelligence, organized like a",
+    "highlight": "Hive.",
+    "intro": "We build, employ and manage dedicated teams for companies anywhere in the world.",
+    "scroll": "Scroll to explore"
+  },
+  "services": {
+    "all": "All Services",
+    "corporate": "Hive Corporate",
+    "tech": "Hive Tech",
+    "people": "Hive People",
+    "talent": "Hive Talent",
+    "creative": "Hive Creative"
+  },
+  "common": {
+    "explore": "Explore Services",
+    "contact": "Contact Us",
+    "learn": "Learn more",
+    "view": "View service",
+    "how": "Explore the Process",
+    "what": "What we do",
+    "all": "All services",
+    "learnMore": "Learn More",
+    "getInTouch": "Get in Touch",
+    "scrollToExplore": "Scroll to Explore"
+  },
+  "sections": {
+    "who": {
+      "eyebrow": "WHO WE ARE",
+      "title": "Welcome to the Hive.",
+      "body": "SapiHive is a Workforce-as-a-Service company based in New Cairo, Egypt. We build, employ and manage dedicated teams for companies anywhere in the world.",
+      "link": "About SapiHive"
+    },
+    "services": {
+      "eyebrow": "OUR SERVICES",
+      "title": "Five Hives. One partner."
+    },
+    "why": {
+      "eyebrow": "WHY SAPIHIVE",
+      "title": "Less hiring complexity. More focus.",
+      "body": "Dedicated teams, scalable operations and a single partner.",
+      "link": "About SapiHive"
+    },
+    "industries": {
+      "eyebrow": "INDUSTRIES",
+      "title": "Teams for different business needs.",
+      "body": "Industry categories will be confirmed before launch.",
+      "link": "Explore Industries"
+    },
+    "process": {
+      "eyebrow": "PROCESS",
+      "title": "Discover. Assemble. Operate. Deliver. Scale.",
+      "body": "Five stages from defining your need to growing your team.",
+      "link": "Explore the Process"
+    },
+    "expertise": {
+      "eyebrow": "OUR EXPERTISE",
+      "title": "People and process, working together.",
+      "body": "Our team brings 15+ years of experience across the fields we serve.",
+      "link": "Our Story"
+    },
+    "work": {
+      "eyebrow": "SELECTED WORK",
+      "title": "A selection of our team's work.",
+      "body": "Decovia, Zam, Lulu and Nutra Maxx are featured in the company profile.",
+      "link": "Get in touch"
+    },
+    "join": {
+      "eyebrow": "JOIN THE HIVE",
+      "title": "Work with the Hive.",
+      "body": "Join our network of models, ushers, promoters and brand ambassadors.",
+      "link": "Join Us"
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Questions before you get started?",
+      "body": "Answers will be confirmed with the SapiHive team.",
+      "link": "Ask Us"
+    },
+    "contact": {
+      "eyebrow": "GET IN TOUCH",
+      "title": "Build your team with SapiHive.",
+      "body": "Discuss your business needs with our team.",
+      "link": "Contact Us"
+    }
+  },
+  "pages": {
+    "about": {
+      "title": "About SapiHive",
+      "body": "Human Intelligence, organized like a Hive."
+    },
+    "services": {
+      "title": "Our Services",
+      "body": "Five specialized Hives, one partner."
+    },
+    "industries": {
+      "title": "Industries",
+      "body": "Industries and sector details will be confirmed before launch."
+    },
+    "process": {
+      "title": "Our Process",
+      "body": "Discover · Assemble · Operate · Deliver · Scale"
+    },
+    "join": {
+      "title": "Join Us",
+      "body": "Become part of the Hive."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "Let's discuss your business needs."
+    }
+  },
+  "seo": {
+    "title": "SapiHive | Workforce-as-a-Service",
+    "description": "Human Intelligence, organized like a Hive. Dedicated workforce solutions for businesses worldwide."
+  },
+  "footer": {
+    "tagline": "Workforce-as-a-Service",
+    "eyebrow": "LET’S WORK TOGETHER",
+    "ctaTitle": "The next move",
+    "ctaHighlight": "starts with people.",
+    "ctaDescription": "From operations and technology to people and creative expertise, let’s build the team your business needs.",
+    "ctaButton": "Start a Conversation",
+    "brandDescription": "SapiHive brings people, skills and expertise together through flexible Workforce-as-a-Service solutions built around your business.",
+    "location": "Cairo, Egypt",
+    "companyHeading": "Explore",
+    "servicesHeading": "Our Services",
+    "connectHeading": "Let’s Connect",
+    "connectDescription": "Have a business challenge or looking for the right team? We’d love to hear from you.",
+    "rights": "All rights reserved."
+  },
+  "loader": {
+    "opening": "Opening SapiHive website",
+    "logoAlt": "SapiHive — Workforce-as-a-Service"
+  },
+  "heroStory": {
+    "generalEyebrow": "OUR SERVICE HIVE",
+    "generalTitle": "A Connected Hive of Workforce Services",
+    "generalDescription": "We bring people, technology and creative expertise together in one connected workforce ecosystem. Five specialized services work as one to help organizations build stronger teams, simplify operations and grow with confidence.",
+    "serviceLabel": "SERVICE",
+    "descriptions": [
+      "End-to-end business and operational support to streamline processes, improve efficiency and keep your organization focused on sustainable growth.",
+      "Specialized technology teams and adaptable digital solutions that help your business develop, innovate and respond to changing demands.",
+      "People-centered workforce support that simplifies team management, strengthens employee experiences and encourages productive workplaces.",
+      "Flexible recruitment and talent solutions connecting your business with the right skills and expertise, precisely when you need them.",
+      "Brand, content and marketing expertise that transforms ideas into compelling communication and stronger relationships with your audience."
+    ],
+    "cta": {
+      "eyebrow": "JOIN THE HIVE",
+      "title": "Ready to Join the Hive?",
+      "description": "Whether you are building a team or growing your career, we connect people, technology and creative expertise in one place. Come be part of it.",
+      "button": "Join Us"
+    }
+  },
+  "whoDetailed": {
+    "label": "WHO WE ARE",
+    "title": "Human Intelligence.",
+    "highlight": "Organized for Your Business.",
+    "intro": "SapiHive is a Workforce-as-a-Service (WaaS) company based in Cairo, Egypt. We provide businesses with complete, dedicated teams ready to work toward their goals.",
+    "sapiTitle": "Human Intelligence",
+    "sapiDescription": "The people, skills, and expertise behind everything we deliver.",
+    "hiveTitle": "Collective Strength",
+    "hiveDescription": "Specialists working as one synchronized team toward a shared goal.",
+    "button": "More About SapiHive"
+  },
+  "serviceCards": {
+    "label": "OUR SERVICES",
+    "heading": "Workforce Solutions for",
+    "highlight": "Every Business Need",
+    "intro": "Flexible, scalable teams across business operations, technology, people, talent and creative services — all under one hive.",
+    "cardEyebrow": "WORKFORCE SOLUTIONS",
+    "cardLink": "Explore this service",
+    "previous": "Previous service",
+    "next": "Next service",
+    "position": "Service position",
+    "swipeHint": "Drag or swipe the cards, or use the arrows to explore",
+    "details": {
+      "hive-corporate": "Reliable teams that handle business operations, back-office support and daily workflows, so your organization can focus on growth.",
+      "hive-tech": "Skilled technology teams for software development, websites and IT solutions that keep your business moving forward.",
+      "hive-people": "HR professionals who recruit, onboard, manage payroll and support your people throughout their employee journey.",
+      "hive-talent": "The right people for your next activation, launch or event — from brand ambassadors and promoters to on-ground teams.",
+      "hive-creative": "Creative specialists in branding, design and content who help your business communicate clearly and consistently."
+    },
+    "stack": "Service cards",
+    "stackRole": "carousel"
+  },
+  "preview": {
+    "aria": "SapiHive camera transition preview",
+    "backHomeAria": "Back to SapiHive homepage",
+    "backToWebsite": "Back to website",
+    "heroDescription": "Whether you are building a team or growing your career, we connect people, technology and creative expertise in one place.",
+    "hiveIllustration": "Completed service hive illustration",
+    "whoIntro": "SapiHive is a Workforce-as-a-Service company in Cairo. We build, employ and manage dedicated teams so businesses can focus on results.",
+    "whyTitle": "One connected hive.",
+    "whyHighlight": "Built around you.",
+    "whyCards": [
+      {
+        "title": "People",
+        "description": "Experienced professionals"
+      },
+      {
+        "title": "Technology",
+        "description": "Digital-first operations"
+      },
+      {
+        "title": "Scalability",
+        "description": "Flexible business support"
+      }
+    ],
+    "returnToWebsite": "Return to your website",
+    "previousCard": "Previous card",
+    "nextCard": "Next card",
+    "moveTo": "Move to",
+    "cameraLabel": "VERTICAL CAMERA PREVIEW — AFTER HERO STORY",
+    "endTitle": "End of vertical camera path",
+    "endDescription": "This is a vertical camera motion prototype, beginning at the last Hero frame. The real homepage Hero interactions, cinematic break and Card Swap remain untouched.",
+    "backToSapiHive": "Back to SapiHive",
+    "featureSubtitles": [
+      "Business operations",
+      "Digital solutions",
+      "People operations",
+      "Talent acquisition",
+      "Creative expertise"
+    ]
+  }
+}
