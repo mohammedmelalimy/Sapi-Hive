@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   return {
-    title: locale === "ar" ? "عن SapiHive | رؤيتنا وقيمنا" : "About SapiHive | Our Story, Vision & Values",
+    title: locale === "ar" ? "عن SapiHive | رؤيتنا وقيمنا" : "About Us | SapiHive — Our Story, Vision & Values",
     description: locale === "ar"
       ? "تعرّف على قصة SapiHive ورؤيتها ورسالتها وقيمها في تقديم حلول القوى العاملة كخدمة."
       : "Meet SapiHive: our story, vision, mission and values behind Workforce-as-a-Service.",

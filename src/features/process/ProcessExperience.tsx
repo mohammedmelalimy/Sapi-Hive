@@ -42,10 +42,10 @@ function ProcessOrbit({ locale }: { locale: Locale }) {
     "left-[-5%] top-[25%]",
   ];
   return (
-    <div data-proc-orbit className="relative mx-auto aspect-square w-[min(78vw,320px)] max-w-full lg:w-full lg:max-w-[550px]" dir="ltr">
+    <div data-proc-orbit className="relative mx-auto aspect-square w-[min(70vw,265px)] max-w-full sm:w-[min(78vw,320px)] lg:w-full lg:max-w-[550px]" dir="ltr">
       <div aria-hidden="true" className="pointer-events-none absolute inset-[10%] rounded-full border border-white/10" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-[20%] rounded-full border border-dashed border-white/[0.13]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-[27%] rounded-full bg-[radial-gradient(circle,rgba(37,54,73,0.85),rgba(15,27,45,0.1)_70%)] shadow-[0_0_100px_rgba(242,169,0,0.1)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-[27%] rounded-full bg-[radial-gradient(circle,rgba(15,27,45,0.85),rgba(15,27,45,0.1)_70%)] shadow-[0_0_100px_rgba(242,169,0,0.1)]" />
       <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 500 500" fill="none">
         <circle cx="250" cy="250" r="206" stroke="white" strokeOpacity=".12" strokeWidth="1" strokeDasharray="4 8" />
         <circle data-proc-orbit-trace cx="250" cy="250" r="206" stroke="#F2A900" strokeWidth="2" strokeLinecap="round" strokeDasharray="1295" strokeDashoffset="1295" transform="rotate(-90 250 250)" />
@@ -57,13 +57,13 @@ function ProcessOrbit({ locale }: { locale: Locale }) {
       {copy.steps.map((step, index) => {
         const Icon = stepIcons[index];
         return (
-          <div key={index} data-proc-orbit-node aria-hidden="true" className={`pointer-events-none absolute ${positions[index]} z-20 flex items-center gap-1.5 rounded-full border border-white/20 bg-[#1B2B40] px-2 py-2 shadow-[0_10px_30px_rgba(0,0,0,.23)] sm:gap-2 sm:px-3`}>
+          <div key={index} data-proc-orbit-node aria-hidden="true" className={`pointer-events-none absolute ${positions[index]} z-20 flex items-center gap-1.5 rounded-full border border-white/20 bg-[#0F1B2D] px-2 py-2 shadow-[0_10px_30px_rgba(0,0,0,.23)] sm:gap-2 sm:px-3`}>
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F2A900] text-[#0F1B2D] sm:h-9 sm:w-9"><Icon size={16} strokeWidth={1.9} /></span>
             <span className="hidden pe-1 text-[10px] font-semibold text-white sm:block sm:text-[12px]">{step.title}</span>
           </div>
         );
       })}
-      <div aria-hidden="true" className="pointer-events-none absolute left-[38%] bottom-[-4%] font-mono text-[10px] font-medium tracking-[.18em] text-white/45">01 — 05</div>
+      <div aria-hidden="true" className="pointer-events-none absolute left-[38%] bottom-[-4%] text-[10px] font-medium tracking-[.18em] text-white/45">01 — 05</div>
     </div>
   );
 }
@@ -79,7 +79,7 @@ function ProcessRail({ locale, activeIndex }: { locale: Locale; activeIndex: num
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[.05] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] [background-size:42px_42px]" />
       <div className="flex items-center justify-between gap-4 border-b border-white/15 pb-5">
         <span className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#F2A900]">{copy.journeyLabel}</span>
-        <span dir="ltr" className="font-mono text-[12px] text-white/60">{String(activeIndex + 1).padStart(2, "0")} / 05</span>
+        <span dir="ltr" className="text-[12px] text-white/60">{String(activeIndex + 1).padStart(2, "0")} / 05</span>
       </div>
 
       <div className="relative my-auto flex flex-1 flex-col justify-center py-8">
@@ -193,24 +193,25 @@ export function ProcessExperience({ locale }: { locale: Locale }) {
   }, { scope: rootRef, dependencies: [locale], revertOnUpdate: true });
 
   return (
-    <main ref={rootRef} lang={locale} dir={isAr ? "rtl" : "ltr"} className="w-full overflow-x-clip" style={{ fontFamily: "Inter, Arial, Helvetica, sans-serif" }}>
+    <main ref={rootRef} lang={locale} dir={isAr ? "rtl" : "ltr"} className="w-full min-w-0 max-w-full overflow-x-clip font-sans">
       {/* 01 — INTRO: asymmetric title with a five-stage orbit. */}
-      <section aria-labelledby="process-page-title" className="relative isolate overflow-hidden bg-[#0F1B2D] pt-[119px] pb-9 text-white lg:min-h-[800px] lg:pb-24 lg:pt-[177px]">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_77%_45%,rgba(91,107,127,.3),transparent_56%)]" aria-hidden="true" />
+      <section aria-labelledby="process-page-title" className="relative isolate overflow-hidden bg-[#0F1B2D] pt-10 pb-9 text-white lg:min-h-[680px] lg:pb-20 lg:pt-16">
+        {/* Match About hero's navy-to-slate background without changing the orbit or GSAP. */}
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_34%,rgba(91,107,127,0.54),transparent_53%),linear-gradient(125deg,#0F1B2D_18%,color-mix(in_srgb,#0F1B2D_65%,#5B6B7F_35%)_100%)]" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-0 -z-10 opacity-[.045] [background-image:linear-gradient(rgba(255,255,255,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.7)_1px,transparent_1px)] [background-size:78px_78px]" aria-hidden="true" />
-        <div className="mx-auto grid max-w-[1440px] items-center gap-5 px-6 sm:px-9 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,.88fr)] lg:gap-7 lg:px-16">
-          <div className="relative z-10 max-w-[820px]">
+        <div className="mx-auto grid w-full min-w-0 max-w-[1440px] grid-cols-1 items-center gap-5 px-6 sm:px-9 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,.88fr)] lg:gap-7 lg:px-16">
+          <div className="relative z-10 min-w-0 max-w-[820px]">
             <div data-proc-hero-item><SectionEyebrow text={copy.eyebrow} isAr={isAr} /></div>
-            <h1 id="process-page-title" className={`mt-5 font-semibold sm:mt-8 ${isAr ? "text-[clamp(2.15rem,8vw,2.8rem)] leading-[1.22] sm:text-[clamp(2.8rem,5.4vw,6.1rem)] sm:leading-[1.3]" : "text-[clamp(2.5rem,9.5vw,3.35rem)] leading-[1.08] tracking-[-.055em] sm:text-[clamp(3.35rem,6vw,6.7rem)] sm:leading-[1.04] sm:tracking-[-.066em]"}`}>
+            <h1 id="process-page-title" className={`mt-5 font-semibold sm:mt-8 ${isAr ? "text-[clamp(2.15rem,8vw,2.8rem)] leading-[1.22] sm:text-[clamp(2.8rem,5.4vw,6.1rem)] sm:leading-[1.3]" : "text-[clamp(2.1rem,8.8vw,2.7rem)] leading-[1.1] tracking-[-.055em] sm:text-[clamp(3.35rem,6vw,6.7rem)] sm:leading-[1.04] sm:tracking-[-.066em]"}`}>
               <span data-proc-hero-item className="block">{copy.heroFirst}</span>
               <span data-proc-hero-item className="block text-[#F2A900]">{copy.heroSecond}</span>
             </h1>
-            <p data-proc-hero-item className="mt-4 max-w-[605px] text-[14px] leading-[1.65] text-[#CED6E0] sm:mt-7 sm:text-[17px] sm:leading-[1.9]">{base.description}</p>
+            <p data-proc-hero-item className="mt-4 max-w-[605px] text-[14px] leading-[1.65] text-white/80 sm:mt-7 sm:text-[17px] sm:leading-[1.9]">{base.description}</p>
             <a data-proc-hero-item href="#journey" className="group mt-6 inline-flex items-center sm:mt-9 gap-3 rounded-full border border-white/30 bg-white/[.06] px-6 py-3.5 text-[14px] font-semibold text-white transition-colors duration-300 hover:border-[#F2A900] hover:bg-[#F2A900] hover:text-[#0F1B2D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F2A900]">
               {copy.heroScroll}<ArrowDown size={17} strokeWidth={1.8} className="transition-transform group-hover:translate-y-1" aria-hidden="true" />
             </a>
           </div>
-          <div className="relative mx-auto flex w-full max-w-[590px] items-center justify-center lg:py-5">
+          <div className="relative mx-auto flex w-full min-w-0 max-w-[590px] items-center justify-center lg:py-5">
             <ProcessOrbit locale={locale} />
           </div>
         </div>
@@ -227,7 +228,7 @@ export function ProcessExperience({ locale }: { locale: Locale }) {
             <h2 id="process-journey-title" className={`mt-4 font-semibold sm:mt-6 ${isAr ? "text-[clamp(2rem,7vw,2.5rem)] leading-[1.2] sm:text-[clamp(2.5rem,4.7vw,5.1rem)] sm:leading-[1.25]" : "text-[clamp(2.1rem,7vw,3rem)] leading-[1.13] tracking-[-.045em] sm:text-[clamp(3rem,5vw,5.5rem)] sm:leading-[1.07] sm:tracking-[-.06em]"}`}>
               {copy.journeyTitle} <span className="text-[#F2A900]">{copy.journeyAccent}</span>
             </h2>
-            <p className="mt-3 max-w-[610px] text-[14px] leading-[1.7] text-[#566577] sm:mt-6 sm:text-[18px] sm:leading-[1.9]">{copy.journeyDescription}</p>
+            <p className="mt-3 max-w-[610px] text-[14px] leading-[1.7] text-[#5B6B7F] sm:mt-6 sm:text-[18px] sm:leading-[1.9]">{copy.journeyDescription}</p>
           </div>
           <div className="mt-8 grid gap-10 sm:mt-16 lg:mt-20 lg:grid-cols-[minmax(0,.86fr)_minmax(0,1.14fr)] lg:gap-12 xl:gap-20">
             <div className="hidden lg:block">
@@ -238,18 +239,18 @@ export function ProcessExperience({ locale }: { locale: Locale }) {
               {base.steps.map((step, index) => {
                 const Icon = stepIcons[index];
                 return (
-                  <article key={index} id={`process-step-${index + 1}`} data-proc-stage className="relative flex min-h-[63svh] flex-col justify-center border-b border-[#D0D2D0] py-20 last:border-b-0">
+                  <article key={index} id={`process-step-${index + 1}`} data-proc-stage className="relative flex min-h-[63svh] flex-col justify-center border-b border-[#5B6B7F]/20 py-20 last:border-b-0">
                     <div className="absolute -start-[34px] top-[74px] flex h-[14px] w-[14px] items-center justify-center rounded-full border-[3px] border-[#F5F3EE] bg-[#F2A900] sm:-start-[50px] lg:hidden" aria-hidden="true" />
                     <div data-proc-stage-enter className="flex items-center justify-between gap-5">
-                      <span dir="ltr" className="text-[12px] font-semibold tracking-[.14em] text-[#BD8200]">{copy.stageText} / {String(index + 1).padStart(2, "0")}</span>
-                      <span className="inline-flex h-12 w-12 items-center justify-center rounded-[14px] border border-[#D7D9D7] text-[#0F1B2D] sm:h-14 sm:w-14"><Icon size={25} strokeWidth={1.5} aria-hidden="true" /></span>
+                      <span dir="ltr" className="text-[12px] font-semibold tracking-[.14em] text-[#5B6B7F]">{copy.stageText} / {String(index + 1).padStart(2, "0")}</span>
+                      <span className="inline-flex h-12 w-12 items-center justify-center rounded-[14px] border border-[#5B6B7F]/25 text-[#0F1B2D] sm:h-14 sm:w-14"><Icon size={25} strokeWidth={1.5} aria-hidden="true" /></span>
                     </div>
                     <h3 data-proc-stage-enter className={`mt-7 font-semibold ${isAr ? "text-[clamp(2.35rem,4vw,4.7rem)] leading-[1.3]" : "text-[clamp(2.7rem,4.7vw,5.2rem)] leading-[1.06] tracking-[-.055em]"}`}>{step.title}<span className="text-[#F2A900]">.</span></h3>
-                    <p data-proc-stage-enter className="mt-6 max-w-[510px] text-[16px] leading-[1.9] text-[#536477] sm:text-[18px]">{step.text}</p>
+                    <p data-proc-stage-enter className="mt-6 max-w-[510px] text-[16px] leading-[1.9] text-[#5B6B7F] sm:text-[18px]">{step.text}</p>
                     <div data-proc-stage-enter className="mt-12 flex items-center gap-3" aria-hidden="true">
                       <div className="h-[3px] w-16 rounded-full bg-[#F2A900]" />
-                      <div className="h-[3px] w-7 rounded-full bg-[#D5D9DB]" />
-                      <div className="h-[3px] w-3 rounded-full bg-[#D5D9DB]" />
+                      <div className="h-[3px] w-7 rounded-full bg-[#5B6B7F]/25" />
+                      <div className="h-[3px] w-3 rounded-full bg-[#5B6B7F]/25" />
                     </div>
                   </article>
                 );
@@ -259,8 +260,8 @@ export function ProcessExperience({ locale }: { locale: Locale }) {
             {/* Compact mobile flow: all five stages are available without five tall stacked chapters. */}
             <div className="lg:hidden">
               <div className="flex items-center justify-between gap-3">
-                <span className="text-[11px] font-semibold uppercase tracking-[.12em] text-[#566577]">{copy.journeyLabel}</span>
-                <span className="shrink-0 font-mono text-xs text-[#BD8200]" dir="ltr">{String(activeStep + 1).padStart(2, "0")} / 05</span>
+                <span className="text-[11px] font-semibold uppercase tracking-[.12em] text-[#5B6B7F]">{copy.journeyLabel}</span>
+                <span className="shrink-0 text-xs text-[#5B6B7F]" dir="ltr">{String(activeStep + 1).padStart(2, "0")} / 05</span>
               </div>
               <div className="mt-4 grid grid-cols-5 gap-2" role="group" aria-label={copy.journeyLabel}>
                 {base.steps.map((step, index) => (
@@ -271,40 +272,40 @@ export function ProcessExperience({ locale }: { locale: Locale }) {
                     aria-controls="process-mobile-active-stage"
                     aria-label={`${copy.stageText} ${index + 1}: ${step.title}`}
                     onClick={() => setActiveStep(index)}
-                    className={`flex min-h-12 items-center justify-center rounded-[12px] border text-[13px] font-semibold transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BD8200] ${activeStep === index ? "border-[#F2A900] bg-[#F2A900] text-[#0F1B2D]" : "border-[#D6D9D8] bg-white text-[#58697A]"}`}
+                    className={`flex min-h-12 items-center justify-center rounded-[12px] border text-[13px] font-semibold transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2A900] ${activeStep === index ? "border-[#F2A900] bg-[#F2A900] text-[#0F1B2D]" : "border-[#5B6B7F]/25 bg-white text-[#5B6B7F]"}`}
                   >
                     <span dir="ltr">{String(index + 1).padStart(2, "0")}</span>
                   </button>
                 ))}
               </div>
-              <article id="process-mobile-active-stage" aria-live="polite" aria-atomic="true" className="mt-4 overflow-hidden rounded-[24px] border border-[#E2E3E0] bg-white p-6 shadow-[0_14px_40px_rgba(15,27,45,.05)]">
+              <article id="process-mobile-active-stage" aria-live="polite" aria-atomic="true" className="mt-4 overflow-hidden rounded-[24px] border border-[#5B6B7F]/20 bg-white p-6 shadow-[0_14px_40px_rgba(15,27,45,.05)]">
                 <div className="flex items-center justify-between gap-4">
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-[14px] bg-[#0F1B2D] text-[#F2A900]">
                     <ActiveMobileIcon size={24} strokeWidth={1.7} aria-hidden="true" />
                   </span>
-                  <span dir="ltr" className="text-xs font-semibold tracking-[.14em] text-[#BD8200]">{copy.stageText} / {String(activeStep + 1).padStart(2, "0")}</span>
+                  <span dir="ltr" className="text-xs font-semibold tracking-[.14em] text-[#5B6B7F]">{copy.stageText} / {String(activeStep + 1).padStart(2, "0")}</span>
                 </div>
                 <h3 className={`mt-5 font-semibold text-[#0F1B2D] ${isAr ? "text-[27px] leading-[1.3]" : "text-[30px] leading-[1.1] tracking-[-.055em]"}`}>
                   {base.steps[activeStep].title}<span className="text-[#F2A900]">.</span>
                 </h3>
-                <p className="mt-3 text-[14px] leading-[1.7] text-[#536477]">{base.steps[activeStep].text}</p>
-                <div className="mt-5 flex items-center justify-between gap-3 border-t border-[#E6E7E4] pt-4">
+                <p className="mt-3 text-[14px] leading-[1.7] text-[#5B6B7F]">{base.steps[activeStep].text}</p>
+                <div className="mt-5 flex items-center justify-between gap-3 border-t border-[#5B6B7F]/20 pt-4">
                   <button
                     type="button"
                     onClick={() => setActiveStep((previous) => Math.max(0, previous - 1))}
                     disabled={activeStep === 0}
                     aria-label={isAr ? "المرحلة السابقة" : "Previous stage"}
-                    className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[#D5D9DC] text-[#0F1B2D] transition-colors hover:bg-[#F5F3EE] disabled:cursor-not-allowed disabled:opacity-30"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[#5B6B7F]/25 text-[#0F1B2D] transition-colors hover:bg-[#F5F3EE] disabled:cursor-not-allowed disabled:opacity-30"
                   >
                     <PreviousArrow size={19} aria-hidden="true" />
                   </button>
-                  <span dir="ltr" className="font-mono text-[12px] font-semibold text-[#536477]">{String(activeStep + 1).padStart(2, "0")} / 05</span>
+                  <span dir="ltr" className="text-[12px] font-semibold text-[#5B6B7F]">{String(activeStep + 1).padStart(2, "0")} / 05</span>
                   <button
                     type="button"
                     onClick={() => setActiveStep((previous) => Math.min(base.steps.length - 1, previous + 1))}
                     disabled={activeStep === base.steps.length - 1}
                     aria-label={isAr ? "المرحلة التالية" : "Next stage"}
-                    className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[#D5D9DC] text-[#0F1B2D] transition-colors hover:bg-[#F5F3EE] disabled:cursor-not-allowed disabled:opacity-30"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[#5B6B7F]/25 text-[#0F1B2D] transition-colors hover:bg-[#F5F3EE] disabled:cursor-not-allowed disabled:opacity-30"
                   >
                     <NextArrow size={19} aria-hidden="true" />
                   </button>
@@ -326,14 +327,14 @@ export function ProcessExperience({ locale }: { locale: Locale }) {
           </div>
           <div className="mt-7 grid gap-4 sm:mt-12 sm:gap-5 lg:mt-16 lg:grid-cols-[1.05fr_.95fr] lg:gap-7">
             <article data-proc-reveal className="flex flex-col rounded-[22px] bg-[#F5F3EE] p-5 sm:rounded-[26px] sm:p-10 lg:min-h-[580px]">
-              <div className="flex items-center justify-between gap-4 border-b border-[#D4D8DC] pb-4 sm:pb-6">
+              <div className="flex items-center justify-between gap-4 border-b border-[#5B6B7F]/20 pb-4 sm:pb-6">
                 <h3 className="text-[clamp(1.45rem,2.25vw,2rem)] font-semibold">{copy.stopTitle}</h3>
-                <span className="text-[12px] font-semibold text-[#7B8895]" dir="ltr">01 / 02</span>
+                <span className="text-[12px] font-semibold text-[#5B6B7F]" dir="ltr">01 / 02</span>
               </div>
               <ul className="mt-4 grid grid-cols-2 gap-x-3 sm:mt-6 sm:gap-x-8">
                 {copy.stopItems.map((item, index) => (
-                  <li key={item} className="flex min-h-[58px] items-center gap-2 border-b border-[#E0E2E3] py-2.5 text-[12px] font-medium leading-[1.45] text-[#3F4D5C] sm:min-h-[65px] sm:gap-3 sm:py-3 sm:text-[15px]">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#DCE1E5] text-[11px] text-[#536477]" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <li key={item} className="flex min-h-[58px] items-center gap-2 border-b border-[#5B6B7F]/20 py-2.5 text-[12px] font-medium leading-[1.45] text-[#5B6B7F] sm:min-h-[65px] sm:gap-3 sm:py-3 sm:text-[15px]">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#5B6B7F]/15 text-[11px] text-[#5B6B7F]" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                     {item}
                   </li>
                 ))}
@@ -356,7 +357,7 @@ export function ProcessExperience({ locale }: { locale: Locale }) {
       </section>
 
       {/* 04 — FOUR PROMISES: sourced from Why SapiHive in Company Profile page 9. */}
-      <section aria-labelledby="process-why-title" className="relative isolate overflow-hidden bg-[#5B6B7F] py-12 text-white lg:py-32">
+      <section aria-labelledby="process-why-title" className="relative isolate overflow-hidden bg-[#0F1B2D] py-12 text-white lg:py-32">
         <div className="pointer-events-none absolute -end-28 -top-40 h-[480px] w-[480px] rounded-full border border-white/10" aria-hidden="true" />
         <div className="mx-auto max-w-[1440px] px-6 sm:px-9 lg:px-16">
           <div data-proc-reveal>

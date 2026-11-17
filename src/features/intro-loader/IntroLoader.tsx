@@ -9,7 +9,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 const LOADER_COMPLETE_EVENT = "sapihive:intro-complete";
 
 /**
- * Branded introductory transition with a circular iris reveal and soft ambient aurora.
+ * Branded introductory transition with a circular iris reveal and a solid Hive Navy background.
  * Uses the original logo and runs once per mount. No fake progress bar.
  */
 export function IntroLoader({ locale }: { locale: Locale }) {
@@ -39,21 +39,6 @@ export function IntroLoader({ locale }: { locale: Locale }) {
     const ctx = gsap.context(() => {
       const logo = screen.querySelector<HTMLElement>("[data-loader-logo]");
       const dots = Array.from(screen.querySelectorAll<HTMLElement>("[data-loader-dot]"));
-      const auras = Array.from(screen.querySelectorAll<HTMLElement>("[data-loader-aurora]"));
-
-      // Aurora: low-contrast ambient motion, independent of the intro timeline.
-      auras.forEach((aura, i) => {
-        gsap.to(aura, {
-          xPercent: i === 0 ? 18 : -16,
-          yPercent: i === 0 ? -11 : 13,
-          scale: i === 0 ? 1.12 : 1.2,
-          duration: i === 0 ? 4.8 : 5.7,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-        });
-      });
-
       gsap.set(logo, { autoAlpha: 0, y: 18, filter: "blur(9px)" });
       gsap.set(dots, { autoAlpha: 0, y: 7 });
 
@@ -134,28 +119,8 @@ export function IntroLoader({ locale }: { locale: Locale }) {
       data-intro-screen
       role="status"
       aria-label={t.opening}
-      className="fixed inset-0 z-[100] isolate flex items-center justify-center overflow-hidden bg-[#42566B]"
+      className="fixed inset-0 z-[100] isolate flex items-center justify-center overflow-hidden bg-[#0F1B2D]"
     >
-      {/* Slate-blue background: lighter than the old solid Navy. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,#263D56_0%,#42566B_48%,#647B91_100%)]"
-      />
-
-      {/* Soft moving aurora - deliberately restrained. */}
-      <div
-        data-loader-aurora
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-[32vw] -top-[35vh] h-[95vmax] w-[95vmax] rounded-full blur-[70px]"
-        style={{ background: "radial-gradient(circle,rgba(190,214,236,.33) 0%,rgba(159,189,218,.12) 38%,transparent 70%)" }}
-      />
-      <div
-        data-loader-aurora
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-[58vh] -right-[32vw] h-[90vmax] w-[90vmax] rounded-full blur-[80px]"
-        style={{ background: "radial-gradient(circle,rgba(198,154,83,.15) 0%,rgba(155,180,211,.14) 32%,transparent 72%)" }}
-      />
-
       {/* Original asset: no redraw, no glass card. */}
       <div className="relative z-10 flex flex-col items-center gap-9 px-6">
         <div data-loader-logo className="flex items-center justify-center opacity-0">
@@ -174,7 +139,7 @@ export function IntroLoader({ locale }: { locale: Locale }) {
             <span
               key={i}
               data-loader-dot
-              className={`h-1.5 w-1.5 rounded-full opacity-0 ${i === 2 ? "bg-[#E9C37F]" : "bg-[#EDF5FB]"}`}
+              className={`h-1.5 w-1.5 rounded-full opacity-0 ${i === 2 ? "bg-[#F2A900]" : "bg-[#F5F3EE]"}`}
             />
           ))}
         </div>

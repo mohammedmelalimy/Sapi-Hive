@@ -1,0 +1,96 @@
+.palette { background:#F5F3EE; max-width:100%; min-width:0; --sv-soft-amber:#F5F3EE; }
+.hero {
+  min-width:0; max-width:100%;
+  background-color:#0F1B2D;
+  background-image:
+    radial-gradient(ellipse at 78% 34%,rgba(91,107,127,0.54),transparent 53%),
+    linear-gradient(125deg,#0F1B2D 18%,color-mix(in srgb,#0F1B2D 65%,#5B6B7F 35%) 100%);
+}
+.heroAtmosphere {
+  position:absolute; inset:-28% -9% -35%; pointer-events:none;
+  /* No second color gradient: keep the About hero palette intact. */
+}
+.heroAtmosphere::after {
+  content:""; position:absolute; inset:0;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:120px 100%; mask-image:linear-gradient(90deg,transparent 5%,black 60%,transparent 100%);
+}
+.heroIndex { isolation:isolate; }
+.indexRow { position:relative; z-index:1; transition:padding .36s ease,background .36s ease,color .36s ease; }
+.indexRow:hover,.indexRow:focus-visible { padding-inline:12px; background:rgba(255,255,255,.055);color:var(--sv-soft-amber);outline:none; }
+.indexGhost { position:absolute; top:-25%;right:-6%;z-index:-1;font-size:clamp(220px,24vw,360px);line-height:1;font-weight:800;letter-spacing:-.15em;color:rgba(255,255,255,.018);user-select:none; }
+.roundCta { box-shadow:0 0 0 1px rgba(255,255,255,.06) inset; }
+.bento { grid-auto-flow:row dense; }
+.bento > article { min-width:0; max-width:100%; }
+.card { position:relative; isolation:isolate; width:100%; min-width:0; max-width:100%; height:100%; border:1px solid rgba(15,27,45,.055); transition: transform .65s cubic-bezier(.18,.7,.2,1), box-shadow .65s cubic-bezier(.18,.7,.2,1); }
+.card:hover { transform:translateY(-7px); box-shadow:0 24px 65px rgba(15,27,45,.12); }
+.card::before { content:""; pointer-events:none; position:absolute; height:2px; left:0;right:100%;top:0; background:#F2A900;transition:right .5s ease; }
+.card:hover::before {right:0;}
+.cardMark { position:absolute; top:13%;right:4%;font-size:clamp(105px,16vw,240px);line-height:.8;font-weight:780;letter-spacing:-.14em;color:rgba(15,27,45,.042);user-select:none;transition:transform .8s cubic-bezier(.18,.7,.2,1); }
+.card:hover .cardMark { transform:translate(-8px,9px) rotate(-5deg); }
+.cardArrow { transition:background .35s ease,color .35s ease, transform .35s ease; }
+.card:hover .cardArrow { background:#0F1B2D; color:#FFFFFF; transform:rotate(45deg); }
+.corporate {color:#FFFFFF; }
+.corporate .card { background:linear-gradient(145deg,color-mix(in srgb,#5B6B7F 28%,#0F1B2D) 0%,#0F1B2D 78%);border-color:rgba(255,255,255,.06); }
+.corporate .cardMark { color:rgba(255,255,255,.065);top:28%;right:8%;font-size:clamp(150px,20vw,310px); }
+.corporate .card:hover .cardArrow {background:var(--sv-soft-amber);color:#0F1B2D;}
+.tech .card {background:#F5F3EE;}
+.people .card {background:#FFFFFF;}
+.talent .card {background:color-mix(in srgb,#F2A900 20%,#F5F3EE);}
+.creative .card {background:color-mix(in srgb,#5B6B7F 24%,#FFFFFF);}
+.cardCapabilities { position:relative; max-width:100%; overflow-wrap:anywhere; }
+.cardCapabilities span { color:inherit;opacity:.77; }
+.trait { transition:background .35s ease; }
+.trait:hover {background:#F5F3EE;}
+.cta { background:#FFFFFF; }
+.ctaWatermark {position:absolute;right:0;bottom:-46%;font-size:clamp(300px,35vw,580px);line-height:1;font-weight:800;letter-spacing:-.13em;color:rgba(15,27,45,.035);pointer-events:none;}
+@media (max-width:1023px) { .cardMark{font-size:150px;} }
+@media (max-width:639px) { .palette{overflow-x:clip;} .hero h1,.palette h2,.card h3{overflow-wrap:normal;word-break:normal;max-width:100%;} .hero .heroAtmosphere{inset:-8% 0 -18%;} .cardCapabilities span{max-width:100%;overflow-wrap:anywhere;} .heroIndex{ margin-top:8px; }.card{min-height:245px;}.corporate .card{min-height:315px;}.cardMark{font-size:145px;top:9%;right:5%;}.corporate .cardMark{font-size:195px;top:16%;}.ctaWatermark{bottom:-22%;} }
+@media (prefers-reduced-motion:reduce) { .card,.cardMark,.cardArrow,.indexRow,.roundCta{transition:none!important;} }
+
+/* Mobile autoplay carousel. The horizontal overflow lives INSIDE the track;
+   the page/container width never expands to fit offscreen slides. */
+.mobileCarousel { width:100%; max-width:100%; min-width:0; overflow:hidden; }
+.mobileCarouselTop { display:flex; align-items:center; justify-content:space-between; gap:14px; margin:0 0 14px; }
+.mobileCarouselHint { min-width:0; margin:0; font-size:12px; font-weight:500; line-height:1.5; color:#5B6B7F; }
+.mobileCarouselControls { display:flex; flex-shrink:0; align-items:center; gap:7px; }
+.mobileCarouselArrow { display:grid; place-items:center; width:36px; height:36px; flex-shrink:0; border:1px solid rgba(15,27,45,.16); border-radius:50%; background:#FFFFFF; color:#0F1B2D; cursor:pointer; }
+.mobileCarouselArrow:active { transform:scale(.94); }
+.mobileCarouselArrow:focus-visible,.mobileCarouselDot:focus-visible {outline:2px solid #F2A900;outline-offset:3px;}
+.mobileCarouselTrack {
+  display:flex; align-items:stretch; gap:12px; width:100%; max-width:100%; min-width:0;
+  overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  padding-block:1px 10px; padding-inline:7.5%;
+  scrollbar-width:none; -ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;
+}
+.mobileCarouselTrack::-webkit-scrollbar {display:none;}
+.mobileSlide {
+  flex:0 0 100%; min-width:0; max-width:350px; scroll-snap-align:center;
+  border:1px solid rgba(15,27,45,.08); border-radius:22px;
+  overflow:hidden; isolation:isolate;
+}
+.mobileSlideLink { display:flex; flex-direction:column; justify-content:space-between; min-width:0; min-height:325px; height:100%; padding:21px; color:inherit; text-decoration:none; }
+.mobileSlideTop { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+.mobileSlideCategory { max-width:75%; overflow-wrap:anywhere; font-size:10px; font-weight:750; letter-spacing:.12em; line-height:1.4; opacity:.76; }
+.mobileSlideArrow { display:grid; flex:0 0 36px; width:36px; height:36px; place-items:center; border:1px solid currentColor; border-radius:50%; opacity:.75; }
+.mobileSlideContent { position:relative; z-index:1; min-width:0; margin-top:15px; }
+.mobileSlideTitle { margin:0; font-size:clamp(25px,7.2vw,36px); font-weight:700; line-height:1.07; letter-spacing:-.065em; overflow-wrap:anywhere; }
+.mobileSlideDescription { display:-webkit-box; margin:10px 0 0; max-width:100%; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:3; color:#5B6B7F; font-size:13px; line-height:1.55; overflow-wrap:anywhere; }
+.mobileSlideTags { display:flex; flex-wrap:wrap; gap:6px; min-width:0; margin-top:15px; }
+.mobileSlideTags span { max-width:100%; padding:6px 9px; border:1px solid rgba(15,27,45,.13); border-radius:999px; font-size:10px; line-height:1.25; overflow-wrap:anywhere; }
+.mobileSlideAction { display:inline-flex; align-items:center; gap:6px; margin-top:17px; font-size:12px; font-weight:700; }
+.mobileSlide_hive_corporate { background:#0F1B2D; color:#FFFFFF; }
+.mobileSlide_hive_corporate .mobileSlideDescription {color:rgba(255,255,255,.76);}
+.mobileSlide_hive_corporate .mobileSlideTags span {border-color:rgba(255,255,255,.26);}
+.mobileSlide_hive_tech {background:#FFFFFF; color:#0F1B2D;}
+.mobileSlide_hive_people {background:color-mix(in srgb,#5B6B7F 12%,#FFFFFF);color:#0F1B2D;}
+.mobileSlide_hive_talent {background:color-mix(in srgb,#F2A900 16%,#F5F3EE);color:#0F1B2D;}
+.mobileSlide_hive_creative {background:#FFFFFF;color:#0F1B2D;}
+.mobileCarouselDots {display:flex;justify-content:center;align-items:center;gap:8px;margin-top:15px;}
+.mobileCarouselDot {width:7px;height:7px;flex-shrink:0;border:0;border-radius:999px;background:rgba(15,27,45,.25);cursor:pointer;transition:width .25s ease,background .25s ease;}
+.mobileCarouselDotActive {width:24px;background:#0F1B2D;}
+@media(max-width:359px) { .mobileSlideLink{padding:17px;min-height:330px;} .mobileSlideTitle{font-size:25px;} }
+@media(min-width:768px) { .mobileCarousel{display:none;} }
+@media(prefers-reduced-motion:reduce) { .mobileCarouselTrack{scroll-behavior:auto;} .mobileCarouselDot{transition:none;} }

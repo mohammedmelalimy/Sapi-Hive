@@ -1,13 +1,66 @@
-import {notFound} from "next/navigation";
-import Link from "next/link";
-import {services} from "@/data/services";
-import {isLocale,localizedPath,locales} from "@/i18n/config";
-import {getServices} from "@/i18n/services";
-import {getDictionary} from "@/i18n/dictionaries";
-import {Header} from "@/components/layout/Header";
-import {Footer} from "@/components/layout/Footer";
-export function generateStaticParams(){return locales.flatMap(locale=>services.map(s=>({locale,slug:s.slug})));}
-export default async function ServicePage({params}:{params:Promise<{locale:string;slug:string}>}){
- const {locale,slug}=await params;if(!isLocale(locale))notFound();const service=getServices(locale).find(s=>s.slug===slug);if(!service)notFound();const d=getDictionary(locale);
- return <><Header locale={locale}/><main className="min-h-screen bg-[#f5f3ee] pt-28 text-[#0f1b2d]"><div className="section-shell"><p className="section-label">{d.pages.services.title}</p><h1 className="text-5xl font-bold" dir={locale === "ar" ? "rtl" : "ltr"}>{service.title}</h1><p className="mt-6 max-w-xl">{service.description}</p><h2 className="mt-12 text-2xl font-bold">{d.common.what}</h2><ul className="mt-4 grid gap-3">{service.offerings.map(o=><li key={o}>— {o}</li>)}</ul><Link href={localizedPath(locale,"/contact")} className="mt-10 inline-block border-b border-current pb-1">{d.common.contact} ↗</Link></div></main><Footer locale={locale}/></>;
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import { services } from '@/data/services';
+import { isLocale, locales } from '@/i18n/config';
+import { getServices } from '@/i18n/services';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { HiveExperience } from '@/features/hives/HiveExperiences';
+import type { HiveSlug } from '@/features/hives/hiveCopy';
+import { CorporateEditorialExperience } from '@/features/corporate/CorporateEditorialExperience';
+import { TechExperience } from '@/features/tech/TechExperience';
+import { PeopleExperience } from '@/features/people/PeopleExperience';
+import { CreativeExperience } from '@/features/creative/CreativeExperience';
+import { TalentExperience } from '@/features/talent/TalentExperience';
+
+export function generateStaticParams() {
+  return locales.flatMap(locale => services.map(service => ({ locale, slug: service.slug })));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params;
+  if (!isLocale(locale)) notFound();
+  const service = getServices(locale).find(item => item.slug === slug);
+  if (!service) notFound();
+  return { title: `${service.title} | SapiHive`, description: service.description };
+}
+
+export default async function ServicePage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  if (!isLocale(locale)) notFound();
+  const service = getServices(locale).find(item => item.slug === slug);
+  if (!service) notFound();
+  // On small screens, Hive Tech previously clipped its own visual content,
+  // but the Header and Footer remained outside that boundary.
+  // Keep the complete route in one inline-sized, non-scrollable clipping boundary
+  // so transforms cannot enlarge the document's horizontal scroll area.
+  // `overflow: clip` does not create a scroll container (unlike `hidden`),
+  // preserving sticky header behavior. No other Hive route is wrapped.
+  if (slug === 'hive-tech') {
+    return (
+      <div
+        data-tech-viewport-boundary
+        className="relative isolate w-full min-w-0 max-w-full overflow-x-clip"
+        style={{ inlineSize: '100%', maxInlineSize: '100%', minInlineSize: 0, overflowX: 'clip' }}
+      >
+        <Header locale={locale} />
+        <TechExperience locale={locale} />
+        <Footer locale={locale} />
+      </div>
+    );
+  }
+
+  return <>
+    <Header locale={locale} />
+    {slug === 'hive-corporate'
+      ? <CorporateEditorialExperience locale={locale} />
+      : slug === 'hive-people'
+        ? <PeopleExperience locale={locale} />
+        : slug === 'hive-creative'
+          ? <CreativeExperience locale={locale} />
+          : slug === 'hive-talent'
+            ? <TalentExperience locale={locale} />
+            : <HiveExperience locale={locale} slug={slug as HiveSlug} />}
+    <Footer locale={locale} />
+  </>;
 }

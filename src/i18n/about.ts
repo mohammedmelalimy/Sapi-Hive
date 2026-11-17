@@ -40,7 +40,7 @@ export type AboutCopy = {
 
 export const aboutCopy: Record<Locale, AboutCopy> = {
   en: {
-    heroLabel: "ABOUT SAPIHIVE · WORKFORCE-AS-A-SERVICE",
+    heroLabel: "ABOUT US · WORKFORCE-AS-A-SERVICE",
     heroTitleA: "Human Intelligence.",
     heroTitleB: "Organized like a Hive.",
     heroDescription: "We build, employ and manage dedicated teams for companies anywhere in the world — bringing skilled people together with structure, purpose and a shared goal.",

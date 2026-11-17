@@ -1,6 +1,27 @@
-import {notFound} from "next/navigation";
-import {isLocale} from "@/i18n/config";
-import {getDictionary} from "@/i18n/dictionaries";
-import {Header} from "@/components/layout/Header";
-import {Footer} from "@/components/layout/Footer";
-export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!isLocale(locale))notFound();const d=getDictionary(locale);return <><Header locale={locale}/><main className="min-h-dvh bg-[#f5f3ee] pt-24 text-[#0f1b2d]"><div className="section-shell"><h1 className="text-5xl font-semibold">{d.pages.services.title}</h1><p className="mt-6 max-w-2xl">{d.pages.services.body}</p></div></main><Footer locale={locale}/></>;}
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { isLocale } from "@/i18n/config";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { ServicesExperience } from "@/features/services/ServicesExperience";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+  return locale === "ar"
+    ? { title: "خدمات SapiHive | القوى العاملة كخدمة", description: "اكتشف الخدمات الخمس: Hive Corporate وHive Tech وHive People وHive Talent وHive Creative." }
+    : { title: "Our Services | SapiHive", description: "Discover five specialist Hives providing Workforce-as-a-Service for businesses." };
+}
+
+export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+
+  return (
+    <>
+      <Header locale={locale} />
+      <ServicesExperience locale={locale} />
+      <Footer locale={locale} />
+    </>
+  );
+}

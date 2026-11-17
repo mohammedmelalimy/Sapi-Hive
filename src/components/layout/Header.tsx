@@ -40,10 +40,22 @@ export function Header({ locale }: HeaderProps) {
   const otherLocale: Locale = isArabic ? 'en' : 'ar';
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [headerHidden, setHeaderHidden] = useState(false);
 
   const homeHref = localizedPath(locale, '/');
+  const isHome = pathname === homeHref || pathname === `${homeHref}/`;
 
+  // Use the original header layouts: floating on Home, full-width on inner pages.
+  // Scroll direction now controls visibility throughout the site.
+  const segments = pathname.replace(/^\/(en|ar)(?=\/|$)/, '').split('/').filter(Boolean);
+  const section = segments[0] ?? '';
+  const isAboutPage = section === 'about' && segments.length === 1;
+  const isServicesOverviewPage = section === 'services' && segments.length === 1;
+  const isProcessPage = section === 'process' && segments.length === 1;
+  const isCorporatePage = section === 'services' && segments[1] === 'hive-corporate';
+  const hasAboutHeroGradient = isAboutPage || isServicesOverviewPage || isProcessPage || isCorporatePage;
   // Native links are intentionally used for Home and the logo so the complete
   // homepage reloads, including its intro and GSAP timelines, every time.
   const handleHomeClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -76,33 +88,70 @@ export function Header({ locale }: HeaderProps) {
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
-  // Detect when the hero is out of view
+  // Direction-aware navigation on every page:
+  // visible at the top and while scrolling UP, hidden while scrolling DOWN.
+  // Keep the header visible whenever the mobile menu is open.
   useEffect(() => {
+    let lastScrollY = Math.max(0, window.scrollY);
+    let lastDirection = 0;
+    let distanceInDirection = 0;
+    let frame = 0;
+
+    setHeaderHidden(false);
+
     const updateHeader = () => {
-      const hero = document.querySelector<HTMLElement>('[data-hero]');
+      frame = 0;
+      const currentY = Math.max(0, window.scrollY);
+      const delta = currentY - lastScrollY;
 
-      const isPastHero = hero ? hero.getBoundingClientRect().bottom <= 90 : true;
+      if (isHome) {
+        const hero = document.querySelector<HTMLElement>('[data-hero]');
+        setScrolled(hero ? hero.getBoundingClientRect().bottom <= 90 : currentY > 90);
+      } else {
+        setScrolled(false);
+      }
 
-      setScrolled(isPastHero);
+      if (currentY <= 80 || menuOpen) {
+        setHeaderHidden(false);
+        distanceInDirection = 0;
+        lastDirection = 0;
+      } else if (delta !== 0) {
+        const direction = Math.sign(delta);
+        if (direction !== lastDirection) {
+          lastDirection = direction;
+          distanceInDirection = 0;
+        }
+
+        distanceInDirection += Math.abs(delta);
+        // Ignore tiny scroll movements to prevent header flicker.
+        if (distanceInDirection >= 12) {
+          setHeaderHidden(direction > 0);
+          distanceInDirection = 0;
+        }
+      }
+
+      lastScrollY = currentY;
+    };
+
+    const scheduleUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateHeader);
     };
 
     updateHeader();
-
-    window.addEventListener('scroll', updateHeader, {
-      passive: true
-    });
-
-    window.addEventListener('resize', updateHeader);
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate);
 
     return () => {
-      window.removeEventListener('scroll', updateHeader);
-      window.removeEventListener('resize', updateHeader);
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [pathname]);
+  }, [pathname, isHome, menuOpen]);
 
   // Close mobile menu on navigation
   useEffect(() => {
     setMenuOpen(false);
+    setServicesOpen(false);
   }, [pathname]);
 
   // Lock body scrolling while mobile menu is open
@@ -127,41 +176,64 @@ export function Header({ locale }: HeaderProps) {
     };
   }, [menuOpen]);
 
+  // Change only the English navigation label; preserve the Arabic translation.
+  const navLabel = (key: (typeof navigation)[number]['key']) =>
+    key === 'about' && !isArabic ? 'About Us' : dict.nav[key];
+
   const navLinkClass = (path: string) =>
     [
       'relative whitespace-nowrap py-3',
       'text-[15px] font-medium leading-relaxed',
       'transition-colors duration-200',
-      isActive(path) ? 'text-white' : 'text-[#F5F3EE]/75 hover:text-white'
+      isActive(path) ? 'text-[#F2A900]' : 'text-[#F5F3EE]/80 hover:text-white'
     ].join(' ');
 
   return (
+    <>
     <header
       id="site-header"
       dir={direction}
       className={[
-        'fixed inset-x-0 top-0 z-50 w-full',
-        'transition-transform duration-500 ease-out',
-        scrolled || menuOpen ? 'translate-y-3' : 'translate-y-0'
+        isHome ? 'fixed inset-x-0 top-0' : 'sticky inset-x-0 top-0',
+        'z-50 w-full font-sans text-[#F5F3EE]',
+        'transition-transform duration-300 ease-out motion-reduce:transition-none',
+        headerHidden && !menuOpen
+          ? '-translate-y-[130%]'
+          : isHome && (scrolled || menuOpen)
+          ? 'translate-y-3'
+          : 'translate-y-0',
+        isHome
+          ? 'bg-transparent'
+          : hasAboutHeroGradient
+          ? 'bg-[radial-gradient(ellipse_at_78%_34%,rgba(91,107,127,0.34),transparent_53%),linear-gradient(125deg,#0F1B2D_18%,#0F1B2D_100%)]'
+          : 'bg-[#0F1B2D]'
       ].join(' ')}
     >
       {/* Header Container */}
       <nav
         aria-label={isArabic ? 'القائمة الرئيسية' : 'Main navigation'}
-        className={[
-          'relative mx-auto flex h-[76px] w-[calc(100%-28px)] max-w-[1440px] items-center gap-6 px-3',
-          'md:h-[92px] md:w-[calc(100%-48px)] md:px-6',
-          'border transition-[border-color,background,box-shadow,backdrop-filter,border-radius] duration-500 ease-out',
-          scrolled || menuOpen
-            ? [
-                'rounded-[25px] border-white/20',
-                // Layered semitransparent highlights: background remains visible THROUGH the glass.
-                'bg-[linear-gradient(115deg,rgba(55,76,99,0.92)_0%,rgba(15,27,45,0.94)_52%,rgba(55,76,99,0.90)_100%)]',
-                'backdrop-blur-[28px] backdrop-saturate-[135%]',
-                'shadow-[0_14px_40px_rgba(5,14,29,0.22),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.05)]'
-              ].join(' ')
-            : 'rounded-none border-transparent bg-transparent shadow-none backdrop-blur-none'
-        ].join(' ')}
+        className={isHome
+          ? [
+              'relative mx-auto flex h-[76px] w-[calc(100%-28px)] max-w-[1440px] items-center gap-6 px-3',
+              'md:h-[92px] md:w-[calc(100%-48px)] md:px-6',
+              'border transition-[border-color,background,box-shadow,backdrop-filter,border-radius] duration-500 ease-out',
+              scrolled || menuOpen
+                ? [
+                    'rounded-[25px] border-white/20',
+                    'bg-[linear-gradient(115deg,rgba(91,107,127,0.60)_0%,rgba(15,27,45,0.94)_52%,rgba(91,107,127,0.52)_100%)]',
+                    'backdrop-blur-[28px] backdrop-saturate-[135%]',
+                    'shadow-[0_14px_40px_rgba(15,27,45,0.28),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.05)]'
+                  ].join(' ')
+                : 'rounded-none border-transparent bg-transparent shadow-none backdrop-blur-none'
+            ].join(' ')
+          : [
+              'relative mx-auto flex h-[76px] w-full max-w-[1440px] items-center gap-6 px-5',
+              'md:h-[92px] md:px-9 lg:px-12 xl:px-16',
+              // Keep nav transparent wherever the matching brand-palette gradient is used.
+              hasAboutHeroGradient
+                ? 'rounded-none border-0 bg-transparent shadow-none'
+                : 'rounded-none border-0 bg-[#0F1B2D] shadow-none'
+            ].join(' ')}
       >
         {/* Logo */}
         <a
@@ -222,9 +294,9 @@ export function Header({ locale }: HeaderProps) {
                       invisible absolute start-0 top-full
                       z-50 w-[268px] translate-y-2 p-2.5 opacity-0
                       rounded-[18px] border border-white/25
-                      bg-[linear-gradient(145deg,rgba(82,107,129,0.64)_0%,rgba(24,42,61,0.74)_100%)]
+                      bg-[linear-gradient(145deg,rgba(91,107,127,0.84)_0%,rgba(15,27,45,0.96)_100%)]
                       backdrop-blur-[30px] backdrop-saturate-[170%]
-                      shadow-[0_22px_55px_rgba(6,16,30,0.26),inset_0_1px_0_rgba(255,255,255,0.19)]
+                      shadow-[0_22px_55px_rgba(15,27,45,0.30),inset_0_1px_0_rgba(255,255,255,0.19)]
                       transition-[opacity,transform,visibility] duration-200 ease-out
 
                       group-hover:visible
@@ -244,11 +316,11 @@ export function Header({ locale }: HeaderProps) {
                           block rounded-[10px] px-3.5 py-2.5
                           text-start text-[14px] font-medium leading-relaxed
                           text-white/80 transition-[background-color,color] duration-200
-                          hover:bg-white/[0.12] hover:text-[#F2C87D]
+                          hover:bg-white/[0.12] hover:text-[#F2A900]
                           focus-visible:bg-white/[0.12]
-                          focus-visible:text-[#F2C87D]
+                          focus-visible:text-[#F2A900]
                           focus-visible:outline focus-visible:outline-2
-                          focus-visible:outline-[#D6AD68]
+                          focus-visible:outline-[#F2A900]
                         "
                       >
                         {dict.services[service.key]}
@@ -268,7 +340,7 @@ export function Header({ locale }: HeaderProps) {
                   aria-current={isActive(item.path) ? 'page' : undefined}
                   className={navLinkClass(item.path)}
                 >
-                  {dict.nav[item.key]}
+                  {navLabel(item.key)}
                 </a>
               );
             }
@@ -280,7 +352,7 @@ export function Header({ locale }: HeaderProps) {
                 aria-current={isActive(item.path) ? 'page' : undefined}
                 className={navLinkClass(item.path)}
               >
-                {dict.nav[item.key]}
+                {navLabel(item.key)}
               </Link>
             );
           })}
@@ -304,7 +376,7 @@ export function Header({ locale }: HeaderProps) {
               border-s border-white/15 ps-4
               text-[13px] font-semibold
               text-white/85 transition-colors
-              hover:text-[#C69A53]
+              hover:text-[#F2A900]
             "
           >
             <Globe2 size={18} strokeWidth={1.6} />
@@ -339,8 +411,8 @@ export function Header({ locale }: HeaderProps) {
           'absolute inset-x-[14px] top-[calc(100%+8px)] lg:hidden',
           'h-[calc(100dvh-105px)] overflow-y-auto',
           'rounded-[22px] border border-white/25',
-          'bg-[#223951]/85 backdrop-blur-[32px] backdrop-saturate-[150%]',
-          'shadow-[0_18px_45px_rgba(4,12,25,0.30)]',
+          'bg-[#0F1B2D]/95 backdrop-blur-[32px] backdrop-saturate-[150%]',
+          'shadow-[0_18px_45px_rgba(15,27,45,0.30)]',
           'transition-all duration-300',
           menuOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-3 opacity-0'
         ].join(' ')}
@@ -354,43 +426,60 @@ export function Header({ locale }: HeaderProps) {
           {navigation.map((item) => {
             if (item.key === 'services') {
               return (
-                <details key={item.key} className="group border-b border-white/10">
-                  <summary
-                    className="
-                      flex cursor-pointer list-none
-                      items-center justify-between
-                      py-4 text-[17px] font-medium
-                      text-white
-                      [&::-webkit-details-marker]:hidden
-                    "
+                <div key={item.key} className="border-b border-white/10">
+                  <div className="flex items-center justify-between gap-3">
+                    {/* Tapping the label navigates to the main Services page. */}
+                    <Link
+                      href={localizedPath(locale, '/services')}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setServicesOpen(false);
+                      }}
+                      aria-current={pathname === localizedPath(locale, '/services') ? 'page' : undefined}
+                      className={[
+                        'min-w-0 flex-1 py-4 text-start text-[17px] font-medium',
+                        'transition-colors',
+                        isActive('/services') ? 'text-[#F2A900]' : 'text-white hover:text-[#F5F3EE]/75'
+                      ].join(' ')}
+                    >
+                      {dict.nav.services}
+                    </Link>
+
+                    {/* Only the chevron toggles the five Hive links. */}
+                    <button
+                      type="button"
+                      onClick={() => setServicesOpen((open) => !open)}
+                      aria-expanded={servicesOpen}
+                      aria-controls="mobile-services-submenu"
+                      aria-label={isArabic ? 'إظهار أو إخفاء قائمة الخدمات' : 'Expand or collapse Hive services'}
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2A900]"
+                    >
+                      <ChevronDown
+                        size={17}
+                        className={`transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                  </div>
+
+                  <div
+                    id="mobile-services-submenu"
+                    className={`${servicesOpen ? 'flex' : 'hidden'} flex-col gap-1 pb-4 ps-4`}
                   >
-                    {dict.nav.services}
-
-                    <ChevronDown
-                      size={17}
-                      className="
-                        transition-transform
-                        group-open:rotate-180
-                      "
-                    />
-                  </summary>
-
-                  <div className="flex flex-col gap-1 pb-4 ps-4">
                     {serviceLinks.map((service) => (
                       <Link
                         key={service.slug}
                         href={localizedPath(locale, `/services/${service.slug}`)}
-                        onClick={() => setMenuOpen(false)}
-                        className="
-                          py-2 text-[15px] text-white/70
-                          transition-colors hover:text-white
-                        "
+                        onClick={() => {
+                          setMenuOpen(false);
+                          setServicesOpen(false);
+                        }}
+                        className="py-2 text-[15px] text-white/70 transition-colors hover:text-white"
                       >
                         {dict.services[service.key]}
                       </Link>
                     ))}
                   </div>
-                </details>
+                </div>
               );
             }
 
@@ -404,10 +493,10 @@ export function Header({ locale }: HeaderProps) {
                     'border-b border-white/10',
                     'py-4 text-start text-[17px] font-medium',
                     'transition-colors',
-                    isActive(item.path) ? 'text-[#C69A53]' : 'text-white hover:text-[#F5F3EE]/75'
+                    isActive(item.path) ? 'text-[#F2A900]' : 'text-white hover:text-[#F5F3EE]/75'
                   ].join(' ')}
                 >
-                  {dict.nav[item.key]}
+                  {navLabel(item.key)}
                 </a>
               );
             }
@@ -421,15 +510,16 @@ export function Header({ locale }: HeaderProps) {
                   'border-b border-white/10',
                   'py-4 text-start text-[17px] font-medium',
                   'transition-colors',
-                  isActive(item.path) ? 'text-[#C69A53]' : 'text-white hover:text-[#F5F3EE]/75'
+                  isActive(item.path) ? 'text-[#F2A900]' : 'text-white hover:text-[#F5F3EE]/75'
                 ].join(' ')}
               >
-                {dict.nav[item.key]}
+                {navLabel(item.key)}
               </Link>
             );
           })}
         </div>
       </div>
     </header>
+    </>
   );
 }
